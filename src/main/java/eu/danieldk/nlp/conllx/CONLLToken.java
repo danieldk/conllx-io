@@ -17,6 +17,7 @@ package eu.danieldk.nlp.conllx;
 // limitations under the License.
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -29,19 +30,38 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class CONLLToken implements Token {
     private final int position;
-    private final String form;
+
+    private final Optional<String> form;
+
     private final Optional<String> lemma;
+
     private final Optional<String> coursePOSTag;
+
     private final Optional<String> posTag;
+
     private final Optional<String> features;
+
     private final Optional<Integer> head;
+
     private final Optional<String> depRel;
+
     private final Optional<Integer> pHead;
+
     private final Optional<String> pDepRel;
 
-    public CONLLToken(int position, String form, Optional<String> lemma, Optional<String> coursePOSTag,
+    public CONLLToken(int position, Optional<String> form, Optional<String> lemma, Optional<String> coursePOSTag,
                       Optional<String> posTag, Optional<String> features, Optional<Integer> head,
                       Optional<String> depRel, Optional<Integer> pHead, Optional<String> pDepRel) {
+        Preconditions.checkNotNull(form);
+        Preconditions.checkNotNull(lemma);
+        Preconditions.checkNotNull(coursePOSTag);
+        Preconditions.checkNotNull(posTag);
+        Preconditions.checkNotNull(features);
+        Preconditions.checkNotNull(head);
+        Preconditions.checkNotNull(depRel);
+        Preconditions.checkNotNull(pHead);
+        Preconditions.checkNotNull(pDepRel);
+
         this.position = position;
         this.form = form;
         this.lemma = lemma;
@@ -60,7 +80,7 @@ public class CONLLToken implements Token {
     }
 
     @Override
-    public String getForm() {
+    public Optional<String> getForm() {
         return form;
     }
 
@@ -109,18 +129,18 @@ public class CONLLToken implements Token {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CONLLToken that = (CONLLToken) o;
+        final CONLLToken that = (CONLLToken) o;
 
         if (position != that.position) return false;
-        if (coursePOSTag != null ? !coursePOSTag.equals(that.coursePOSTag) : that.coursePOSTag != null) return false;
-        if (depRel != null ? !depRel.equals(that.depRel) : that.depRel != null) return false;
-        if (features != null ? !features.equals(that.features) : that.features != null) return false;
-        if (form != null ? !form.equals(that.form) : that.form != null) return false;
-        if (head != null ? !head.equals(that.head) : that.head != null) return false;
-        if (lemma != null ? !lemma.equals(that.lemma) : that.lemma != null) return false;
-        if (pDepRel != null ? !pDepRel.equals(that.pDepRel) : that.pDepRel != null) return false;
-        if (pHead != null ? !pHead.equals(that.pHead) : that.pHead != null) return false;
-        if (posTag != null ? !posTag.equals(that.posTag) : that.posTag != null) return false;
+        if (!coursePOSTag.equals(that.coursePOSTag)) return false;
+        if (!depRel.equals(that.depRel)) return false;
+        if (!features.equals(that.features)) return false;
+        if (!form.equals(that.form)) return false;
+        if (!head.equals(that.head)) return false;
+        if (!lemma.equals(that.lemma)) return false;
+        if (!pDepRel.equals(that.pDepRel)) return false;
+        if (!pHead.equals(that.pHead)) return false;
+        if (!posTag.equals(that.posTag)) return false;
 
         return true;
     }
@@ -128,21 +148,21 @@ public class CONLLToken implements Token {
     @Override
     public int hashCode() {
         int result = position;
-        result = 31 * result + (form != null ? form.hashCode() : 0);
-        result = 31 * result + (lemma != null ? lemma.hashCode() : 0);
-        result = 31 * result + (coursePOSTag != null ? coursePOSTag.hashCode() : 0);
-        result = 31 * result + (posTag != null ? posTag.hashCode() : 0);
-        result = 31 * result + (features != null ? features.hashCode() : 0);
-        result = 31 * result + (head != null ? head.hashCode() : 0);
-        result = 31 * result + (depRel != null ? depRel.hashCode() : 0);
-        result = 31 * result + (pHead != null ? pHead.hashCode() : 0);
-        result = 31 * result + (pDepRel != null ? pDepRel.hashCode() : 0);
+        result = 31 * result + form.hashCode();
+        result = 31 * result + lemma.hashCode();
+        result = 31 * result + coursePOSTag.hashCode();
+        result = 31 * result + posTag.hashCode();
+        result = 31 * result + features.hashCode();
+        result = 31 * result + head.hashCode();
+        result = 31 * result + depRel.hashCode();
+        result = 31 * result + pHead.hashCode();
+        result = 31 * result + pDepRel.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        String fields[] = {Integer.toString(position), form, lemma.or("_"), coursePOSTag.or("_"), posTag.or("_"),
+        String fields[] = {Integer.toString(position), form.or("_"), lemma.or("_"), coursePOSTag.or("_"), posTag.or("_"),
                 features.or("_"), intToStringOr(head, "_"), depRel.or("_"), intToStringOr(pHead, "_"), pDepRel.or("_")};
         return StringUtils.join(fields, "\t");
     }

@@ -62,9 +62,8 @@ public class CONLLReader implements CorpusReader {
             if (parts.length < 2)
                 throw new IOException(String.format("Line has fewer than two columns: %s", line));
 
-            String form = parts[1];
-
             Integer tokenId = Integer.parseInt(parts[0]);
+            Optional<String> form = valueForColumn(parts, 1);
             Optional<String> lemma = valueForColumn(parts, 2);
             Optional<String> courseTag = valueForColumn(parts, 3);
             Optional<String> tag = valueForColumn(parts, 4);

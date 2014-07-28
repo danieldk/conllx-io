@@ -8,7 +8,7 @@ import com.google.common.base.Optional;
 public interface Token {
     int getPosition();
 
-    String getForm();
+    Optional<String> getForm();
 
     Optional<String> getLemma();
 
