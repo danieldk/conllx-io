@@ -1,4 +1,4 @@
-package eu.danieldk.nlp.conllx.reader;
+package eu.danieldk.nlp.conllx;
 
 // Copyright 2008, 2013 Daniel de Kok
 //
@@ -27,7 +27,7 @@ import org.apache.commons.lang3.StringUtils;
  * of the token, the dependency relation to the head, the projective head
  * of the token, and the dependency relation to the projective head.
  */
-public class CONLLToken {
+public class CONLLToken implements Token {
     private final int position;
     private final String form;
     private final Optional<String> lemma;
@@ -54,42 +54,52 @@ public class CONLLToken {
         this.pDepRel = pDepRel;
     }
 
+    @Override
     public int getPosition() {
         return position;
     }
 
+    @Override
     public String getForm() {
         return form;
     }
 
+    @Override
     public Optional<String> getLemma() {
         return lemma;
     }
 
+    @Override
     public Optional<String> getCoursePOSTag() {
         return coursePOSTag;
     }
 
+    @Override
     public Optional<String> getPosTag() {
         return posTag;
     }
 
+    @Override
     public Optional<String> getFeatures() {
         return features;
     }
 
+    @Override
     public Optional<Integer> getHead() {
         return head;
     }
 
+    @Override
     public Optional<String> getDepRel() {
         return depRel;
     }
 
+    @Override
     public Optional<Integer> getPHead() {
         return pHead;
     }
 
+    @Override
     public Optional<String> getPDepRel() {
         return pDepRel;
     }

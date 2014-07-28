@@ -16,6 +16,8 @@
 
 package eu.danieldk.nlp.conllx.reader;
 
+import eu.danieldk.nlp.conllx.Sentence;
+
 import java.io.Closeable;
 import java.io.IOException;
 

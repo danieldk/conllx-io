@@ -1,4 +1,6 @@
-package eu.danieldk.nlp.conllx.reader;
+package eu.danieldk.nlp.conllx;
+
+import eu.danieldk.nlp.conllx.Token;
 
 import java.util.List;
 
@@ -11,5 +13,5 @@ public interface Sentence {
      * Get the list of tokens in this sentence.
      * @return Token list.
      */
-    public List<CONLLToken> getTokens();
+    public List<Token> getTokens();
 }

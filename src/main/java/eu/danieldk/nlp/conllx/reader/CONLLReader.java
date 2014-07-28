@@ -15,6 +15,10 @@ package eu.danieldk.nlp.conllx.reader;
 // limitations under the License.
 
 import com.google.common.base.Optional;
+import eu.danieldk.nlp.conllx.CONLLToken;
+import eu.danieldk.nlp.conllx.Sentence;
+import eu.danieldk.nlp.conllx.SimpleSentence;
+import eu.danieldk.nlp.conllx.Token;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
@@ -41,7 +45,7 @@ public class CONLLReader implements CorpusReader {
 
     @Override
     public Sentence readSentence() throws IOException {
-        List<CONLLToken> tokens = new ArrayList<>();
+        List<Token> tokens = new ArrayList<>();
 
         String line;
         while ((line = reader.readLine()) != null) {
@@ -52,7 +56,7 @@ public class CONLLReader implements CorpusReader {
                 if (tokens.isEmpty())
                     continue;
 
-                return new PlainSentence(tokens);
+                return new SimpleSentence(tokens);
             }
 
             if (parts.length < 2)
@@ -70,15 +74,15 @@ public class CONLLReader implements CorpusReader {
             Optional<Integer> pHead = intValueForColumn(parts, 8);
             Optional<String> pHeadRel = valueForColumn(parts, 9);
 
-            CONLLToken conllToken = new CONLLToken(tokenId, form, lemma, courseTag, tag, features, head, headRel,
+            Token token = new CONLLToken(tokenId, form, lemma, courseTag, tag, features, head, headRel,
                     pHead, pHeadRel);
 
-            tokens.add(conllToken);
+            tokens.add(token);
         }
 
         // If the the file does not end with a blank line, we have left-overs.
         if (!tokens.isEmpty()) {
-            return new PlainSentence(tokens);
+            return new SimpleSentence(tokens);
         }
 
         return null;
