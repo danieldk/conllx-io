@@ -75,7 +75,7 @@ public class CONLLToken implements Token {
     }
 
     @Override
-    public int getPosition() {
+    public int getID() {
         return position;
     }
 

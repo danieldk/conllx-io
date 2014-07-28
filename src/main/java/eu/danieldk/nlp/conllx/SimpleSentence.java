@@ -85,7 +85,7 @@ public class SimpleSentence implements Sentence {
         for (int i = 0; i < tokens.size(); i++) {
             Token token = tokens.get(i);
 
-            Preconditions.checkArgument(token.getPosition() == i + 1,
+            Preconditions.checkArgument(token.getID() == i + 1,
                     String.format("Tokens should be numbered consecutively, starting at 1: %s", token));
 
             checkHead(token, token.getHead());

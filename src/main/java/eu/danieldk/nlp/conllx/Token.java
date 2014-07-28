@@ -24,9 +24,9 @@ import com.google.common.base.Optional;
  */
 public interface Token {
     /**
-     * Get the position of the token within the sentence, starting at 1.
+     * Get the position/ID of the token within the sentence, starting at 1.
      */
-    int getPosition();
+    int getID();
 
     /**
      * Get the form (actual token).
