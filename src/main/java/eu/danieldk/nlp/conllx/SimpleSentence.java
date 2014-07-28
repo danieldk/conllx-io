@@ -14,6 +14,7 @@
 
 package eu.danieldk.nlp.conllx;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class SimpleSentence implements Sentence {
     private final List<Token> tokens;
 
     public SimpleSentence(List<Token> tokens) {
-        this.tokens = tokens;
+        this.tokens = ImmutableList.copyOf(tokens);
     }
 
     @Override
