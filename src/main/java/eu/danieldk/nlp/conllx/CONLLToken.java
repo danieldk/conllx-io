@@ -35,7 +35,7 @@ public class CONLLToken implements Token {
 
     private final Optional<String> lemma;
 
-    private final Optional<String> coursePOSTag;
+    private final Optional<String> coarsePOSTag;
 
     private final Optional<String> posTag;
 
@@ -49,12 +49,12 @@ public class CONLLToken implements Token {
 
     private final Optional<String> pDepRel;
 
-    public CONLLToken(int position, Optional<String> form, Optional<String> lemma, Optional<String> coursePOSTag,
+    public CONLLToken(int position, Optional<String> form, Optional<String> lemma, Optional<String> coarsePOSTag,
                       Optional<String> posTag, Optional<String> features, Optional<Integer> head,
                       Optional<String> depRel, Optional<Integer> pHead, Optional<String> pDepRel) {
         Preconditions.checkNotNull(form);
         Preconditions.checkNotNull(lemma);
-        Preconditions.checkNotNull(coursePOSTag);
+        Preconditions.checkNotNull(coarsePOSTag);
         Preconditions.checkNotNull(posTag);
         Preconditions.checkNotNull(features);
         Preconditions.checkNotNull(head);
@@ -65,7 +65,7 @@ public class CONLLToken implements Token {
         this.position = position;
         this.form = form;
         this.lemma = lemma;
-        this.coursePOSTag = coursePOSTag;
+        this.coarsePOSTag = coarsePOSTag;
         this.posTag = posTag;
         this.features = features;
         this.head = head;
@@ -90,8 +90,8 @@ public class CONLLToken implements Token {
     }
 
     @Override
-    public Optional<String> getCoursePOSTag() {
-        return coursePOSTag;
+    public Optional<String> getCoarsePOSTag() {
+        return coarsePOSTag;
     }
 
     @Override
@@ -132,7 +132,7 @@ public class CONLLToken implements Token {
         final CONLLToken that = (CONLLToken) o;
 
         if (position != that.position) return false;
-        if (!coursePOSTag.equals(that.coursePOSTag)) return false;
+        if (!coarsePOSTag.equals(that.coarsePOSTag)) return false;
         if (!depRel.equals(that.depRel)) return false;
         if (!features.equals(that.features)) return false;
         if (!form.equals(that.form)) return false;
@@ -150,7 +150,7 @@ public class CONLLToken implements Token {
         int result = position;
         result = 31 * result + form.hashCode();
         result = 31 * result + lemma.hashCode();
-        result = 31 * result + coursePOSTag.hashCode();
+        result = 31 * result + coarsePOSTag.hashCode();
         result = 31 * result + posTag.hashCode();
         result = 31 * result + features.hashCode();
         result = 31 * result + head.hashCode();
@@ -162,7 +162,7 @@ public class CONLLToken implements Token {
 
     @Override
     public String toString() {
-        String fields[] = {Integer.toString(position), form.or("_"), lemma.or("_"), coursePOSTag.or("_"), posTag.or("_"),
+        String fields[] = {Integer.toString(position), form.or("_"), lemma.or("_"), coarsePOSTag.or("_"), posTag.or("_"),
                 features.or("_"), intToStringOr(head, "_"), depRel.or("_"), intToStringOr(pHead, "_"), pDepRel.or("_")};
         return StringUtils.join(fields, "\t");
     }

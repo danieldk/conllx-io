@@ -41,7 +41,7 @@ public interface Token {
     /**
      * Get the coarse-grained part of speech tag.
      */
-    Optional<String> getCoursePOSTag();
+    Optional<String> getCoarsePOSTag();
 
     /**
      * Get the (fine-grained) part of speech tag.
