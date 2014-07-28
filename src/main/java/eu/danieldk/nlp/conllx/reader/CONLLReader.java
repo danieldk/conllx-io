@@ -106,13 +106,4 @@ public class CONLLReader implements CorpusReader {
 
         return Optional.of(Integer.parseInt(columns[column]));
     }
-
-    private static String replaceCharAt(String str, int pos, char c) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(str.substring(0, pos));
-        sb.append(c);
-        sb.append(str.substring(pos + 1));
-        return sb.toString();
-    }
-
 }
