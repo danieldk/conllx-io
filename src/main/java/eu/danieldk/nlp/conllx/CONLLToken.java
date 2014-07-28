@@ -1,5 +1,3 @@
-package eu.danieldk.nlp.conllx;
-
 // Copyright 2008, 2013 Daniel de Kok
 //
 // This class is part of the Jitar tagger.
@@ -15,6 +13,8 @@ package eu.danieldk.nlp.conllx;
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+package eu.danieldk.nlp.conllx;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;

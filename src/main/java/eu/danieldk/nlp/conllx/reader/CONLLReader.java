@@ -1,5 +1,3 @@
-package eu.danieldk.nlp.conllx.reader;
-
 // Copyright 2008, 2013 Daniel de Kok
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +11,8 @@ package eu.danieldk.nlp.conllx.reader;
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+package eu.danieldk.nlp.conllx.reader;
 
 import com.google.common.base.Optional;
 import eu.danieldk.nlp.conllx.CONLLToken;
