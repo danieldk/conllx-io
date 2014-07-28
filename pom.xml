@@ -10,7 +10,7 @@
 
     <groupId>eu.danieldk.nlp</groupId>
     <artifactId>conllx-io</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <scm>
         <url>https://github.com/danieldk/conllx-io</url>
