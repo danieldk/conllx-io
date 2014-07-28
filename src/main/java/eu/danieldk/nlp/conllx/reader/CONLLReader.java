@@ -29,13 +29,34 @@ import java.util.List;
 public class CONLLReader implements CorpusReader {
     private final BufferedReader reader;
 
+    private final boolean strict;
+
     /**
-     * Construct a CONLL corpus reader without start/end tokens and first word decapitalization.
+     * Construct a CoNLL corpus reader in non-strict mode. The caller should
+     * ensure that the provided reader reads UTF-8.
      *
-     * @param reader A corpus reader.
+     * @param reader A buffered reader.
      */
     public CONLLReader(BufferedReader reader) {
+        this(reader, false);
+    }
+
+    /**
+     * Construct a CoNLL corpus reader. The caller should ensure that the provided
+     * reader reads UTF-8. If a strictness is enabled, the reader will check if the
+     * following is true:
+     *
+     * <ul>
+     *     <li>Tokens are numbered consecutively, starting at <i>1</i>.</li>
+     *     <li>If tokens have a head, ensure that it refers to a token or <i>0</i>.</li>
+     * </ul>
+     *
+     * @param reader
+     * @param strict
+     */
+    public CONLLReader(BufferedReader reader, boolean strict) {
         this.reader = reader;
+        this.strict = strict;
     }
 
     @Override
@@ -56,7 +77,7 @@ public class CONLLReader implements CorpusReader {
                 if (tokens.isEmpty())
                     continue;
 
-                return new SimpleSentence(tokens);
+                return constructSentence(tokens);
             }
 
             if (parts.length < 2)
@@ -81,10 +102,24 @@ public class CONLLReader implements CorpusReader {
 
         // If the the file does not end with a blank line, we have left-overs.
         if (!tokens.isEmpty()) {
-            return new SimpleSentence(tokens);
+            return constructSentence(tokens);
         }
 
         return null;
+    }
+
+    /**
+     * Construct a sentence. If strictness is used and invariants do not hold, convert
+     * the exception to an IOException.
+     */
+    private Sentence constructSentence(List<Token> tokens) throws IOException {
+        Sentence sentence;
+        try {
+            sentence = new SimpleSentence(tokens, strict);
+        } catch (IllegalArgumentException e) {
+            throw new IOException(e.getMessage());
+        }
+        return sentence;
     }
 
     private Optional<String> valueForColumn(String[] columns, int column) {

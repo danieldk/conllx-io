@@ -14,6 +14,8 @@
 
 package eu.danieldk.nlp.conllx;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,7 +28,15 @@ public class SimpleSentence implements Sentence {
     private final List<Token> tokens;
 
     public SimpleSentence(List<Token> tokens) {
+        this(tokens, false);
+    }
+
+    public SimpleSentence(List<Token> tokens, boolean checkInvariants) {
         this.tokens = ImmutableList.copyOf(tokens);
+
+        if (checkInvariants) {
+            checkInvariants();
+        }
     }
 
     @Override
@@ -54,5 +64,32 @@ public class SimpleSentence implements Sentence {
     @Override
     public int hashCode() {
         return tokens != null ? tokens.hashCode() : 0;
+    }
+
+    /**
+     * Check that the head is connected.
+     * @param optHead
+     */
+    private void checkHead(Token token, Optional<Integer> optHead) {
+        if (optHead.isPresent()) {
+            int head = optHead.get();
+            Preconditions.checkArgument(head >= 0 && head <= tokens.size(), String.format("Head should refer to token or 0: %s", token));
+        }
+    }
+
+    /**
+     * Check invariants: tokens should number from 1..n, heads should point to
+     * a token or 0.
+     */
+    private void checkInvariants() {
+        for (int i = 0; i < tokens.size(); i++) {
+            Token token = tokens.get(i);
+
+            Preconditions.checkArgument(token.getPosition() == i + 1,
+                    String.format("Tokens should be numbered consecutively, starting at 1: %s", token));
+
+            checkHead(token, token.getHead());
+            checkHead(token, token.getPHead());
+        }
     }
 }

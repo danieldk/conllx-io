@@ -20,6 +20,42 @@ public class CONLLReaderTest {
             "2";
 
     @Test
+    public void incorrectNumberingTest() throws Exception {
+        try (CorpusReader reader = new CONLLReader(new BufferedReader(new StringReader(Samples.TEST_FRAGMENT_INCORRECT_NUMBERING)))) {
+            Assert.assertEquals(Samples.TEST_SENTENCE_1, reader.readSentence());
+            Assert.assertEquals(Samples.TEST_SENTENCE_2_INCORRECT_NUMBERING, reader.readSentence());
+            Assert.assertNull(reader.readSentence());
+        }
+    }
+
+    @Test(expected = IOException.class)
+    public void incorrectNumberingTestStrict() throws Exception {
+        try (CorpusReader reader = new CONLLReader(new BufferedReader(new StringReader(Samples.TEST_FRAGMENT_INCORRECT_NUMBERING)), true)) {
+            Assert.assertEquals(Samples.TEST_SENTENCE_1, reader.readSentence());
+            Assert.assertEquals(Samples.TEST_SENTENCE_2_INCORRECT_NUMBERING, reader.readSentence());
+            Assert.assertNull(reader.readSentence());
+        }
+    }
+
+    @Test
+    public void invalidHeadTest() throws Exception {
+        try (CorpusReader reader = new CONLLReader(new BufferedReader(new StringReader(Samples.TEST_FRAGMENT_INVALID_HEAD)))) {
+            Assert.assertEquals(Samples.TEST_SENTENCE_1, reader.readSentence());
+            Assert.assertEquals(Samples.TEST_SENTENCE_2_INVALID_HEAD, reader.readSentence());
+            Assert.assertNull(reader.readSentence());
+        }
+    }
+
+    @Test(expected = IOException.class)
+    public void invalidHeadTestStrict() throws Exception {
+        try (CorpusReader reader = new CONLLReader(new BufferedReader(new StringReader(Samples.TEST_FRAGMENT_INVALID_HEAD)), true)) {
+            Assert.assertEquals(Samples.TEST_SENTENCE_1, reader.readSentence());
+            Assert.assertEquals(Samples.TEST_SENTENCE_2_INVALID_HEAD, reader.readSentence());
+            Assert.assertNull(reader.readSentence());
+        }
+    }
+
+    @Test
     public void readSentenceTest() throws Exception {
         try (CorpusReader reader = new CONLLReader(new BufferedReader(new StringReader(Samples.TEST_FRAGMENT)))) {
             Assert.assertEquals(Samples.TEST_SENTENCE_1, reader.readSentence());
@@ -27,7 +63,6 @@ public class CONLLReaderTest {
             Assert.assertNull(reader.readSentence());
         }
     }
-
 
     @Test
     public void readSentenceRobustnessTest() throws Exception {
